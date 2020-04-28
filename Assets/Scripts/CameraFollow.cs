@@ -8,21 +8,17 @@ public class CameraFollow : MonoBehaviour
     public GameObject Ground;
     public float camanglelimit;
 
-    public GameObject background;
     float halfcamwidth;
     Generator temp;
-    Player temp2;
 
     private void Start()
     {
         halfcamwidth = Camera.main.orthographicSize *  Screen.width / Screen.height;
         temp = Ground.GetComponent<Generator>();
-        temp2 = followObject.GetComponent<Player>();
     }
 
     private void Update()
     {
-        background.transform.position = new Vector2(this.transform.position.x, this.transform.position.y);
 
         if (followObject != null)
         {

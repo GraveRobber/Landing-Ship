@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     public float minspeed;
     public float plantangle;
     public float maxhight;
+    public GameObject Shield;
+    public int PlayerShieldCount;
     Rigidbody2D PlayerRB;
     RaycastHit2D hit;
 
@@ -23,11 +25,19 @@ public class Player : MonoBehaviour
         hit = Physics2D.Raycast((Vector2)this.transform.position - new Vector2(0f, 1.2f), -Vector2.up, 8);
         
     }
-    //private void Update()
-    //{
-    //    hit = Physics2D.Raycast((Vector2)this.transform.position - new Vector2(0f,1.2f), -Vector2.up);
-    //    Debug.DrawRay((Vector2)this.transform.position - new Vector2(0f, 1.2f), -Vector2.up, Color.red, 10f);
-    //}
+    private void Update()
+    {
+        //hit = Physics2D.Raycast((Vector2)this.transform.position - new Vector2(0f, 1.2f), -Vector2.up);
+        //Debug.DrawRay((Vector2)this.transform.position - new Vector2(0f, 1.2f), -Vector2.up, Color.red, 10f);
+        if(PlayerShieldCount <= 0)
+        {
+            Shield.SetActive(false);
+        }
+        else
+        {
+            Shield.SetActive(true);
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -35,6 +45,16 @@ public class Player : MonoBehaviour
         {
             Destroy(this.gameObject);
             print("FAIL");
+        }
+
+        if(collision.gameObject.tag == "Bullet")
+        {
+            PlayerShieldCount--;
+            print(PlayerShieldCount);
+            if(PlayerShieldCount < 0)
+            {
+                Destroy(this.gameObject);
+            }
         }
 
         if (collision.gameObject.tag == "Plant")

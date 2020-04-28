@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4151928395444374842}
   m_Layer: 0
   m_Name: EnemyBiiet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,7 +113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet_speed: 5
-  bulldir: {x: -13.180732, y: -2.304716}
 --- !u!50 &4151928395444374842
 Rigidbody2D:
   serializedVersion: 4

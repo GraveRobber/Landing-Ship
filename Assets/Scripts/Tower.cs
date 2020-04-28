@@ -8,46 +8,41 @@ public class Tower : MonoBehaviour
     public float BulletTime;
     GameObject ship;
     Transform gun_pos;
-    Bullet bulletscript;
+    Transform gun_axsis;
 
 
     private void Start()
     {
         ship = GameObject.Find("Player");
         gun_pos = transform.GetChild(0).GetChild(0);
-        bulletscript = BulletPref.GetComponent<Bullet>();
+        gun_axsis = transform.GetChild(0);
 
         StartCoroutine(Shot());
-
     }
     private void Update()
     {
         if (ship)
         {
-            //Vector2 temp = transform.GetChild(0).transform.position - ship.transform.position;
-            Vector2 direction = ship.transform.position - transform.position;
-
-            bulletscript.bulldir = direction;
+            Vector2 direction = ship.transform.position - gun_pos.position;
 
             direction = direction.normalized;
 
-            transform.GetChild(0).transform.rotation = 
+            gun_axsis.rotation = 
                 Quaternion.Euler(new Vector3(0, 0, -Vector2.Angle(new Vector2(Mathf.Clamp(direction.x, -1f, -0.3f),
-                Mathf.Clamp(direction.y, 0.1f, 1f)).normalized, -Vector2.right)));
+                Mathf.Clamp(direction.y, 0f, 1f)).normalized, -Vector2.right)));
 
-            
-            
         }
 
     }
 
     IEnumerator Shot()
     {
-        //тут нужен цикл. и нужно перемещать пулю как то... в апдейте наверное... либо из куратины доставай гейм обжект
-        // либо в префаб пули передавй веткор направление... хз пока как
         while (ship)
         {
-            GameObject bullet = Instantiate(BulletPref, gun_pos.position, Quaternion.identity);
+            if (ship.transform.position.x < this.transform.position.x)
+            {
+                GameObject bullet = Instantiate(BulletPref, gun_pos.position, gun_axsis.rotation);
+            }
             yield return new WaitForSeconds(BulletTime);
         }
 

@@ -10,7 +10,8 @@ public class Generator : MonoBehaviour
     public GameObject plant;
 
     public GameObject tower;
-    public float towernum;
+    public int towernum;
+    public GameObject TowersParent;
 
     //GameObject temp;
 
@@ -26,7 +27,8 @@ public class Generator : MonoBehaviour
         //RandomGenerator();
         RandomLandGen();
         PlantInst();
-        PlantTowe();
+        PlantTowe(towernum);
+        
 
     }
 
@@ -116,19 +118,19 @@ public class Generator : MonoBehaviour
         }
     }
 
-
-    public void Clean()
-    {
-        for(int i=0; i < this.transform.GetChild(0).transform.childCount; i++)
-        {
-            Destroy(this.transform.GetChild(0).transform.GetChild(i).gameObject);
-        }
-        for(int i = 1; i<this.transform.childCount;i++)
-        {
-            Destroy(this.transform.GetChild(i).gameObject);
-        }
+    // Clean метод надо допилить. а то он ток тиррейн удаляет
+    //public void Clean()
+    //{
+    //    for(int i=0; i < this.transform.GetChild(0).transform.childCount; i++)
+    //    {
+    //        Destroy(this.transform.GetChild(0).transform.GetChild(i).gameObject);
+    //    }
+    //    for(int i = 1; i<this.transform.childCount;i++)
+    //    {
+    //        Destroy(this.transform.GetChild(i).gameObject);
+    //    }
         
-    }
+    //}
 
     void PlantInst()
     {
@@ -151,11 +153,11 @@ public class Generator : MonoBehaviour
         temp.GetComponent<SpriteRenderer>().flipX = true;
     }
 
-    void PlantTowe()
+    void PlantTowe(int temp)
     {
         int check = 0;
         int n = 0;
-        for(int i =0; i<towernum; i++)
+        for(int i = 0; i<temp; i++)
         {
             if(check == n)
             {
@@ -165,11 +167,12 @@ public class Generator : MonoBehaviour
             
             Vector2 towerpos = new Vector2(this.transform.GetChild(n).gameObject.transform.position.x,
             this.transform.GetChild(n).gameObject.transform.position.y + 0.75f);
-            Instantiate(tower, towerpos, Quaternion.identity);
+            Instantiate(tower, towerpos, Quaternion.identity, TowersParent.transform);
         }
         
 
     }
+
 
     int RandomNum()
     {
